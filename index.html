@@ -3,7 +3,110 @@
 <head>
   <meta charset="UTF-8">
   <title>DROSAK</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0D1B2A, #1B263B);
+      color: white;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+    .page {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 10px 60px;
+      overflow-y: auto;
+      z-index: 2;
+    }
+    .page.active { display: flex; }
+    .back-btn, .settings-btn {
+      position: absolute;
+      top: 20px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      font-size: 18px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .back-btn:hover, .settings-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .back-btn { left: 20px; }
+    .settings-btn { right: 20px; }
+    h1 {
+      font-size: 48px;
+      margin: 20px 0;
+      letter-spacing: 2px;
+      color: #5FA8D3;
+      text-align: center;
+      width: 100%;
+    }
+    button.main-btn, .arabic-btn, .chem-btn {
+      background-color: #5FA8D3;
+      color: #0D1B2A;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 24px;
+      cursor: pointer;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+      margin: 15px 0;
+      padding: 15px 30px;
+      transition: 0.3s;
+      width: 80%;
+      max-width: 300px;
+    }
+    button.main-btn:hover, .arabic-btn:hover, .chem-btn:hover {
+      background-color: #A9D6E5;
+      transform: scale(1.05);
+    }
+    .circles {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .circles span {
+      position: absolute;
+      width: 60px; height: 60px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+      animation: move 25s linear infinite;
+    }
+    .circles span:nth-child(1) { left:25%; animation-duration:20s; }
+    .circles span:nth-child(2) { left:10%; animation-duration:30s; }
+    .circles span:nth-child(3) { left:70%; animation-duration:18s; }
+    .circles span:nth-child(4) { left:40%; animation-duration:22s; }
+    .circles span:nth-child(5) { left:65%; animation-duration:17s; }
+    @keyframes move {
+      0% { top:100%; transform: scale(0) rotate(0deg); opacity: 0; }
+      100% { top:-10%; transform: scale(1.5) rotate(360deg); opacity: 1; }
+    }
+    .background-books {
+      background-image: url('https://cdn-icons-png.flaticon.com/512/2232/2232688.png');
+      background-size: 250px;
+      background-repeat: no-repeat;
+      background-position: bottom left;
+      opacity: 0.08;
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+  </style>
 </head>
 <body>
 
@@ -28,7 +131,7 @@
     <button class="main-btn" onclick="showPage('physicsPage')">فيزياء</button>
     <button class="main-btn" onclick="showPage('biologyPage')">أحياء</button>
     <button class="main-btn" onclick="showPage('englishPage')">ENGLISH</button>
-    <button class="main-btn" onclick="showPage('mathPage')">رياضة</button>
+    <button class="main-btn">رياضة</button>
   </div>
 
   <!-- الصفحة 3: الإعدادات -->
@@ -51,7 +154,15 @@
     <button class="back-btn" onclick="showPage('subjectsPage')">← رجوع</button>
     <h1>مادة كيمياء</h1>
     <button class="chem-btn">خالد صقر</button>
-    <button class="chem-btn">عبد الجواد</button>
+    <button class="chem-btn" onclick="showPage('abdelgawadPage')">عبد الجواد</button>
+  </div>
+
+  <!-- ✅ الصفحة الجديدة الخاصة بعبد الجواد -->
+  <div class="page" id="abdelgawadPage">
+    <button class="back-btn" onclick="showPage('chemistryPage')">← رجوع</button>
+    <h1>عبد الجواد - كيمياء</h1>
+    <button class="chem-btn">شرح 2026</button>
+    <button class="chem-btn">عضوية 2025</button>
   </div>
 
   <!-- الصفحة 6: فزياء -->
@@ -78,13 +189,12 @@
     <button class="chem-btn">عبقري لغه</button>
   </div>
 
-  <!-- الصفحة 9: رياضة -->
-  <div class="page" id="mathPage">
-    <button class="back-btn" onclick="showPage('subjectsPage')">← رجوع</button>
-    <h1>مادة رياضة</h1>
-    <button class="chem-btn">أحمد عصام</button>
-  </div>
+  <script>
+    function showPage(id) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
 
-  <script src="script.js"></script>
 </body>
-</html>
+  </html>
